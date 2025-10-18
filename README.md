@@ -8,11 +8,8 @@ https://github.com/user-attachments/assets/095a3a20-f6e5-457b-a3d4-7da830f32b9e
 
 ## Features
 
-- Compile Go projects with custom compilation flags
-- Generate disassembled output using `go tool objdump`
 - Display results in a separate editor window
 - Automatic cursor position synchronization between source code and disassembly
-- Find the current function in the disassembled code
 
 ## Installation
 

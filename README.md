@@ -2,6 +2,10 @@
 
 Neovim plugin for analyzing Go code through `objdump`. Allows you to view disassembled machine code of a function directly in the editor with source code line synchronization.
 
+### 📺 Demo
+
+https://github.com/user-attachments/assets/095a3a20-f6e5-457b-a3d4-7da830f32b9e
+
 ## Features
 
 - Compile Go projects with custom compilation flags

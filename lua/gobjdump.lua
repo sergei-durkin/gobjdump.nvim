@@ -7,7 +7,7 @@ local ts_utils = require('nvim-treesitter.ts_utils')
 local config = {
     build = {
         output = "main.o",
-        gcflags = "",
+        args = {},
     },
     dump = {
         tool = "go tool objdump",
@@ -79,8 +79,18 @@ M.dump = function(details)
     local cursor = vim.api.nvim_win_get_cursor(0)[1]
     local func = M.func_name(bufnr) or ""
 
+    local command = string.format("!go build -o %s %s %s && %s %s %s > %s",
+        M.config.build.output,
+        table.concat(M.config.build.args, " "),
+        details.fargs[1],
+        M.config.dump.tool,
+        M.config.build.output,
+        table.concat(M.config.dump.args, " "),
+        M.config.dump.output
+    )
+
     vim.cmd('rightbelow vnew')
-    vim.api.nvim_buf_set_lines(0, 0, -1, false, {"hello"})
+    vim.api.nvim_buf_set_lines(0, 0, -1, false, {command})
     vim.opt_local.modified = false
     vim.wo.statuscolumn = ""
     vim.wo.number = false
@@ -88,16 +98,6 @@ M.dump = function(details)
     vim.bo.filetype = "objdump"
 
     local win = vim.api.nvim_get_current_win()
-
-    local command = string.format("!go build -o %s -gcflags=\"%s\" %s && %s %s %s > %s",
-        config.build.output,
-        config.build.gcflags,
-        details.fargs[1],
-        config.dump.tool,
-        config.build.output,
-        table.concat(config.dump.args, " "),
-        config.dump.output
-    )
 
     vim.api.nvim_exec(command, true)
 
@@ -111,6 +111,9 @@ M.dump = function(details)
     file:close()
 
     M.lines = vim.split(content, '\n', { plain = true })
+
+    table.insert(M.lines, 1, '')
+    table.insert(M.lines, 1, command)
 
     vim.api.nvim_buf_set_lines(0, 0, -1, false, M.lines)
 

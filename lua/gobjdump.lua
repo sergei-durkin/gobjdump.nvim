@@ -1,5 +1,3 @@
-local ts_utils = require("nvim-treesitter.ts_utils")
-
 ---@class Config
 ---@field command function The command to run objdump
 ---@field build table Build options
@@ -30,7 +28,7 @@ end
 M.hm_index = {}
 
 M.func_name = function(bufnr)
-  local node = ts_utils.get_node_at_cursor()
+  local node = vim.treesitter.get_node({ bufnr = bufnr })
   if not node then
     return nil
   end

@@ -24,6 +24,7 @@ https://github.com/user-attachments/assets/095a3a20-f6e5-457b-a3d4-7da830f32b9e
   end,
   dependencies = {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
   },
 }
 ```
